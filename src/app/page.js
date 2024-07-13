@@ -1,46 +1,117 @@
 "use client";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-
+const phrases = ["Hoşgeldin", "Bienvenue"];
+const typingSpeed = 150;
+const erasingSpeed = 100;
+const delayBetweenPhrases = 1000;
 export default function Home() {
+  const [currentPhrase, setCurrentPhrase] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const i = loopNum % phrases.length;
+      const fullPhrase = phrases[i];
+
+      if (isDeleting) {
+        setCurrentPhrase(fullPhrase.substring(0, currentPhrase.length - 1));
+        if (currentPhrase.length === 0) {
+          setIsDeleting(false);
+          setLoopNum(loopNum + 1);
+        }
+      } else {
+        setCurrentPhrase(fullPhrase.substring(0, currentPhrase.length + 1));
+        if (currentPhrase.length === fullPhrase.length) {
+          setTimeout(() => setIsDeleting(true), delayBetweenPhrases);
+        }
+      }
+    };
+
+    const typingTimer = setTimeout(
+      handleTyping,
+      isDeleting ? erasingSpeed : typingSpeed
+    );
+
+    return () => clearTimeout(typingTimer);
+  }, [currentPhrase, isDeleting, loopNum]);
   const SENTENCES = [
     {
       id: 1,
-      french: "Bonjour, comment ça va ?",
-      english: "Hello, how are you?",
+      french: "Bonjour",
+      english: "Hello",
+      turkish: "Merhaba",
     },
     {
       id: 2,
-      french: "Je t'aime.",
-      english: "I love you.",
+      french: "Bonne nuit",
+      english: "Good night",
+      turkish: "İyi geceler",
     },
     {
       id: 3,
-      french: "Bonne journée!",
-      english: "Have a nice day!",
+      french: "pluie",
+      english: "rain",
+      turkish: "yağmur",
     },
     {
       id: 4,
-      french: "Merci beaucoup.",
-      english: "Thank you very much.",
+      french: "soleil",
+      english: "sun",
+      turkish: "güneş",
     },
     {
       id: 5,
-      french: "Où est la bibliothèque?",
-      english: "Where is the library?",
+      french: "Comment t'appelles-tu ?",
+      english: "What is your name?",
+      turkish: "Adın ne?",
+    },
+    {
+      id: 6,
+      french: "Je m'appelle Benek",
+      english: "My name is Benek",
+      turkish: "Benim adım Benek",
+    },
+    {
+      id: 7,
+      french: "gateau au chocolat",
+      english: "chocolate cake",
+      turkish: "çikolatalı kek",
+    },
+    {
+      id: 8,
+      french: "Comment ça va ?",
+      english: "How are you?",
+      turkish: "Nasılsın?",
+    },
+    {
+      id: 9,
+      french: "Ça va bien, merci",
+      english: "I'm fine, thank you",
+      turkish: "İyiyim, teşekkür ederim",
+    },
+    {
+      id: 10,
+      french: "enchantée",
+      english: "nice to meet you",
+      turkish: "Tanıştığımıza memnun oldum",
+    },
+    {
+      id: 11,
+      french: "Où habites-tu?",
+      english: "Where do you live?",
+      turkish: "Nerede yaşıyorsun?",
     },
   ];
 
-  function getRandomColor() {
-    const colors = ["red", "blue", "green", "yellow", "purple", "orange"];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-  function ColorfulText({ text }) {
-    return text.split(" ").map((word, index) => (
-      <span key={index} style={{ color: getRandomColor() }}>
-        {word}{" "}
-      </span>
-    ));
+  function ColorfulText({ text, translation }) {
+    return (
+      <div>
+        <p style={{ fontWeight: "bold", color: "#2F4F4F" }}>{text}</p>
+        <p style={{ color: "#696969", fontStyle: "italic" }}>{translation}</p>
+      </div>
+    );
   }
 
   function speak(text) {
@@ -48,35 +119,23 @@ export default function Home() {
     utterance.lang = "fr-FR";
     window.speechSynthesis.speak(utterance);
   }
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div></div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <ul>
+      <div className={styles.clover}>🍀</div>
+      <div className={styles.daisy}>🌼</div>
+      <div className={styles.welcomeMessage}>{currentPhrase}</div>
+      <ul className={styles.list}>
         {SENTENCES.map((sentence) => (
-          <li key={sentence.id}>
+          <li className={styles.listItem} key={sentence.id}>
             <div className="colorful-text">
-              <ColorfulText text={sentence.french} />
+              <ColorfulText
+                text={sentence.french}
+                translation={sentence.turkish}
+              />
             </div>
             <button
-              className="speak-button"
+              className={styles.button}
               onClick={() => speak(sentence.french)}
             >
               <i className="fas fa-volume-up"></i>
@@ -84,20 +143,6 @@ export default function Home() {
           </li>
         ))}
       </ul>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-      </div>
     </main>
   );
 }
