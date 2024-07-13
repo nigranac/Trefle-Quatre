@@ -1,7 +1,53 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const SENTENCES = [
+    {
+      id: 1,
+      french: "Bonjour, comment ça va ?",
+      english: "Hello, how are you?",
+    },
+    {
+      id: 2,
+      french: "Je t'aime.",
+      english: "I love you.",
+    },
+    {
+      id: 3,
+      french: "Bonne journée!",
+      english: "Have a nice day!",
+    },
+    {
+      id: 4,
+      french: "Merci beaucoup.",
+      english: "Thank you very much.",
+    },
+    {
+      id: 5,
+      french: "Où est la bibliothèque?",
+      english: "Where is the library?",
+    },
+  ];
+
+  function getRandomColor() {
+    const colors = ["red", "blue", "green", "yellow", "purple", "orange"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  function ColorfulText({ text }) {
+    return text.split(" ").map((word, index) => (
+      <span key={index} style={{ color: getRandomColor() }}>
+        {word}{" "}
+      </span>
+    ));
+  }
+
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "fr-FR";
+    window.speechSynthesis.speak(utterance);
+  }
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -9,23 +55,7 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.js</code>
         </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+        <div></div>
       </div>
 
       <div className={styles.center}>
@@ -39,6 +69,22 @@ export default function Home() {
         />
       </div>
 
+      <ul>
+        {SENTENCES.map((sentence) => (
+          <li key={sentence.id}>
+            <div className="colorful-text">
+              <ColorfulText text={sentence.french} />
+            </div>
+            <button
+              className="speak-button"
+              onClick={() => speak(sentence.french)}
+            >
+              <i className="fas fa-volume-up"></i>
+            </button>
+          </li>
+        ))}
+      </ul>
+
       <div className={styles.grid}>
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
@@ -50,44 +96,6 @@ export default function Home() {
             Docs <span>-&gt;</span>
           </h2>
           <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
         </a>
       </div>
     </main>
