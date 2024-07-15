@@ -4,7 +4,7 @@
   align-items: center;
   padding: 20px;
   font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #f3e7e9, #e3eeff);
+  background: #2d2d2d;
   position: relative;
 }
 .clover {
@@ -22,7 +22,7 @@
 .welcomeMessage {
   font-size: 24px;
   font-weight: bold;
-  color: #2f4f4f;
+  color: #ffffff; /* White for better readability */
   margin-bottom: 20px;
   height: 30px;
   animation: fadeIn 1s ease-in-out;
@@ -45,11 +45,11 @@
 }
 
 .listItem {
-  background-color: white;
-  margin-bottom: 10px;
+  background-color: #1e1e1e;
+  margin-bottom: 20px;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,10 +58,11 @@
 .colorful-text span {
   font-size: 18px;
   font-weight: bold;
+  color: #ffcc00;
 }
 
 .button {
-  background-color: #4caf50; /* Green */
+  background-color: #1e90ff; /* Bright blue */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -75,9 +76,13 @@
 }
 
 .button:hover {
-  background-color: #45a049;
+  background-color: #1c86ee; /* Slightly darker blue */
 }
 
 .fas {
   color: white;
+}
+.textColor {
+  color: rgb(122 136 46);
+  font-weight: bold;
 }
