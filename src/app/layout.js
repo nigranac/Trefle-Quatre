@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Trèfle à quatre feuilles ",
-  description: "Bien sûr, un jour",
+  title: "Dört yapraklı yonca",
+  description: "Elbet bir gün...",
 };
 
 export default function RootLayout({ children }) {
