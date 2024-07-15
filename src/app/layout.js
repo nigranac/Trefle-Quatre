@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <meta property="og:title" content="Trèfle à quatre feuilles" />
-        <meta property="og:description" content="Bien sûr, un jour" />
+        <meta property="og:title" content="Dört yapraklı yonca" />
+        <meta property="og:description" content="Elbet bir gün..." />
         <meta
           property="og:image"
           content="https://parade.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTkwNTgxNDU5NDY0MzY1OTQ4/four-leaf-clovers-jpg.jpg"
